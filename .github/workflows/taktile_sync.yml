@@ -1,0 +1,25 @@
+name: Sync Taktile Scripts
+
+on:
+  push:
+    paths:
+      - 'scripts/**/*.py'  # Only triggers when any Python files in "scripts/" change
+
+jobs:
+  update-taktile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v41  # Gets changed files in the PR or commit
+
+      - name: Run Script with Changed Files
+        env:
+          CHANGED_FILES: ${{ steps.changed-files.outputs.all_modified_files }}
+        run: |
+          echo "Changed files: $CHANGED_FILES"
+          python3 run_update.py $CHANGED_FILES  # Passes filenames to the script
