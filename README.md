@@ -34,15 +34,15 @@ This repository integrates with the Taktile API to synchronise Python script cha
 
 The main steps in the integration are:
 1. The GitHub Actions workflow regonises and fetches changed Python scripts.
-2. It identifies the corresponding decision node in Taktile based on the script name.
+2. The workflow triggers the github_taktile_sync.py script which identifies the corresponding decision node in Taktile based on the script name.
 3. The script content is patched into the corresponding decision graph in Taktile.
 
 The Taktile API key is stored securely in GitHub Secrets under `TAKTILE_API_KEY`, and is used to authenticate API requests to update the decision graphs.
 
 The following API endpoints are used:
-- `List Decision Flows`: Fetches the list of flows for the company.
-- `Get Decision Graph`: Fetches the current decision graph for a flow.
-- `Patch Decision Graph`: Updates the decision node with the new Python script content.
+- `List Decision Flows`: Fetches the list of decision flows for the company.
+- `Get Decision Graph`: Fetches the current decision graph for a decision flow.
+- `Patch Decision Graph`: Updates the code node for this decision flow graph with the new Python script content.
 
 ## GitHub Actions Workflow
 
