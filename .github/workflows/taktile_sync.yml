@@ -2,6 +2,8 @@ name: Sync Taktile Scripts
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'scripts/**/*.py'  # Only triggers when any Python files in "scripts/" change
 
@@ -12,6 +14,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install requests
 
       - name: Get Changed Files
         id: changed-files
@@ -19,7 +29,11 @@ jobs:
 
       - name: Run Script with Changed Files
         env:
-          CHANGED_FILES: ${{ steps.changed-files.outputs.all_modified_files }}
+          TAKTILE_API_KEY: ${{ secrets.TAKTILE_API_KEY }}  # Store API key in GitHub Secrets
         run: |
-          echo "Changed files: $CHANGED_FILES"
-          python3 github_taktile_sync.py $CHANGED_FILES  # Passes filenames to the script
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'scripts/*.py')
+          if [[ -n "$changed_files" ]]; then
+            python update_taktile.py $changed_files
+          else
+            echo "No Python files changed in scripts/. Skipping update."
+          fi
