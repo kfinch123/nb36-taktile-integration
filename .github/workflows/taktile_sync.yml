@@ -22,4 +22,4 @@ jobs:
           CHANGED_FILES: ${{ steps.changed-files.outputs.all_modified_files }}
         run: |
           echo "Changed files: $CHANGED_FILES"
-          python3 run_update.py $CHANGED_FILES  # Passes filenames to the script
+          python3 github_taktile_sync.py $CHANGED_FILES  # Passes filenames to the script
