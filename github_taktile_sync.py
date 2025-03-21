@@ -75,10 +75,15 @@ def update_code_node(flow_id, node_id, src_code):
     """Patch decision graph to update the code node"""
     url = f"{BASE_URL}/patch-decision-graph/sandbox/decide"
     payload = {
-        "data": {"flow_id": flow_id, "patches": [{"node_id": node_id, "src_new": src_code}]},
+        "data": {
+            "flow_id": flow_id,
+            "patches": [{"node_id": node_id, "src_new": src_code}]
+        },
         "metadata": {"version": "v1.0"},
         "control": {"execution_mode": "sync"}
     }
+
+    log_message(f"🔍 Sending PATCH request with payload:\n{json.dumps(payload, indent=4)}")
 
     response = requests.post(url, headers=HEADERS, json=payload)
     if response.status_code == 200:
