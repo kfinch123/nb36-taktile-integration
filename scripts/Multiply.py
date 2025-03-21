@@ -1,7 +1,7 @@
 def multiply(data):
     """Function that summarized cols a and b"""
 
-    data["sum"] = data["a"] * data["b"]
+    data["sum"] = data["a"] * data["b"] * data["d"]
 
     return data
 
