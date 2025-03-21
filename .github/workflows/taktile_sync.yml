@@ -33,7 +33,7 @@ jobs:
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'scripts/*.py')
           if [[ -n "$changed_files" ]]; then
-            python update_taktile.py $changed_files
+            python github_taktile_sync.py $changed_files
           else
             echo "No Python files changed in scripts/. Skipping update."
           fi
