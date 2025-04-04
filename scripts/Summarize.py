@@ -1,7 +1,7 @@
 def add(data):
     """Function that summarized cols a and b"""
 
-    data["sum"] = data["a"] + data["b"] + data["c"]
+    data["sum"] = data["a"] + data["b"]
 
     return data
 
